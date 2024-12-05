@@ -1,7 +1,11 @@
 package main.OV.db.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "Client")
@@ -23,6 +27,9 @@ public class ClientEntity extends AbstractBaseEntity {
     /**  email  */
     @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
+
+    @Column(name = "center_id")
+    private String centerId;
 
     /** subscription */
     @Enumerated(EnumType.STRING)

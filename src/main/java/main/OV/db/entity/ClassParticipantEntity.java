@@ -1,7 +1,13 @@
 package main.OV.db.entity;
 
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,10 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class ClassParticipantEntity extends AbstractBaseEntity {
 
-    /** Id de la clase  */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_id")
-    private ClassEntity classEntity;
+
 
     /** Id del cliente que va a la clase. */
     @ManyToOne(fetch = FetchType.LAZY)

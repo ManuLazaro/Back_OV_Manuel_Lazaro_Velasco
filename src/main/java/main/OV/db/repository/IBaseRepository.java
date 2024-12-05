@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.io.Serializable;
@@ -32,7 +31,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	List<T> findAll();
 
 	/*
@@ -44,7 +42,7 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
+
 	Page<T> findAll(Pageable pageable);
 
 	/*
@@ -55,7 +53,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR') || hasRole('ROLE_PROPERTY_USER') || hasRole('ROLE_MAINTAINER') || hasRole('ROLE_COUNCIL_USER')")
-	@RestResource(exported = false)
 	T findOne(@Param("id") ID id);
 
 	/*
@@ -67,7 +64,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	<S extends T> Optional<S> findOne(Example<S> example);
 
 	/*
@@ -77,7 +73,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	<S extends T> S save(S entity);
 
 	/*
@@ -89,7 +84,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	<S extends T> List<S> save(Iterable<S> arg0);
 
 	/*
@@ -100,7 +94,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 //	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	void delete(T entity);
 
 	/*
@@ -111,7 +104,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	//@Override
 //	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	void delete(ID id);
 
 	/*
@@ -122,7 +114,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	//@Override
 //	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	void delete(Iterable<? extends T> entities);
 
 	/*
@@ -134,7 +125,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	<S extends T> List<S> findAll(Example<S> var1, Sort var2);
 
 	/*
@@ -145,7 +135,6 @@ public interface IBaseRepository<T, ID extends Serializable> extends JpaReposito
 	 */
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DISTRIBUTOR')")
-	@RestResource(exported = false)
 	<S extends T> List<S> findAll(Example<S> example);
 
 }
