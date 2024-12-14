@@ -1,8 +1,7 @@
 package main.OV.dto;
 
-import lombok.Data;
 
-@Data
+
 public class CenterDto {
     private String name;
     private String address;

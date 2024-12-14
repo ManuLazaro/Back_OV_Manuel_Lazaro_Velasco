@@ -1,9 +1,7 @@
 package main.OV.db.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
@@ -12,9 +10,7 @@ import java.io.Serializable;
 /**
  * Instantiates a new abstract entity.
  */
-@Getter
-@Setter
-@ToString
+
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass // PARA NO DEFINIR EL ID EN SUS CLASES HIJAS
 public abstract class AbstractBaseEntity implements Serializable {

@@ -1,15 +1,12 @@
 package main.OV.db.entity;
 
-import lombok.Data;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "Client")
-@Data
+
 public class ClientEntity extends AbstractBaseEntity {
 
     /**  id  */
@@ -36,9 +33,9 @@ public class ClientEntity extends AbstractBaseEntity {
     @Column(name = "subscription", length = 20, nullable = false)
     private Role subscription;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private EmployeeEntity employee; // Relación con un empleado (si aplica)
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "employee_id")
+//    private EmployeeEntity employee; // Relación con un empleado (si aplica)
 
 
 

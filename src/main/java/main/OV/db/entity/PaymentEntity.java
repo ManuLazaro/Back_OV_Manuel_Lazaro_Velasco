@@ -1,16 +1,14 @@
 package main.OV.db.entity;
 
-import lombok.Data;
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "Payments")
-@Data
+
 public class PaymentEntity extends AbstractBaseEntity {
 
     /** ID de pago */
@@ -20,9 +18,9 @@ public class PaymentEntity extends AbstractBaseEntity {
     private Long paymentId;
 
     /** Cliente que hace el pago */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private ClientEntity client;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "client_id")
+//    private ClientEntity client;
 
     /** Cantidad del pago */
     @Column(name = "amount", nullable = false)

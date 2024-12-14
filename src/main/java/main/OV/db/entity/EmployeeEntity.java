@@ -1,42 +1,166 @@
 package main.OV.db.entity;
 
-import lombok.Data;
 import jakarta.persistence.*;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Employee")
-@Data
+
 public class EmployeeEntity extends AbstractBaseEntity {
-    public EmployeeEntity(CenterEntity center, String lastName, String firstName, Long employeeId) {
-        this.center = center;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.employeeId = employeeId;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "employee_id")
+    private Long employeeId;
+
+    @Column(name = "center_id")
+    private Integer centerId;
+
+    @Column(name = "first_name", nullable = false, length = 100)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 100)
+    private String lastName;
+
+    @Column(name = "email", nullable = false, length = 100, unique = true)
+    private String email;
+
+    @Column(name = "phone", length = 15)
+    private String phone;
+
+    @Column(name = "role", length = 50)
+    private String role;
+
+    @Column(name = "hire_date")
+    private LocalDate hireDate;
+
+    @Column(name = "status", length = 20, nullable = true)
+    private String status = "active";
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
 
     public EmployeeEntity() {
     }
 
-    /** The ID of the employee. */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+    public EmployeeEntity(Long employeeId, Integer centerId, String firstName, String lastName, String email, String phone, String role, LocalDate hireDate, String status, LocalDateTime createdAt, LocalDateTime updatedAt, String password) {
+        this.employeeId = employeeId;
+        this.centerId = centerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.hireDate = hireDate;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.password = password;
+    }
 
-    /** The first name of the employee. */
-    @Column(name = "first_name")
-    private String firstName;
+    public Long getEmployeeId() {
+        return employeeId;
+    }
 
-    /** The last name of the employee. */
-    @Column(name = "last_name")
-    private String lastName;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
 
-    /** The center where the employee works. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_id")
-    private CenterEntity center; // El centro al que pertenece el empleado
+    public Integer getCenterId() {
+        return centerId;
+    }
+
+    public void setCenterId(Integer centerId) {
+        this.centerId = centerId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(LocalDate hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -1,24 +1,22 @@
 package main.OV.db.entity;
 
 
-import lombok.Data;
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Equipment")
-@Data
+
 public class EquipmentEntity extends AbstractBaseEntity {
     public EquipmentEntity() {
     }
 
     public EquipmentEntity(Long equipmentId, CenterEntity center, String name, String status, LocalDateTime createdAt, String type) {
         this.equipmentId = equipmentId;
-        this.center = center;
+       // this.center = center;
         this.name = name;
         this.status = status;
         this.createdAt = createdAt;
@@ -32,9 +30,9 @@ public class EquipmentEntity extends AbstractBaseEntity {
     private Long equipmentId;
 
     /** Centro donde esta el id */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_id")
-    private CenterEntity center; // Relación con el centro
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "center_id")
+//    private CenterEntity center; // Relación con el centro
 
     /** Nombre. */
     @Column(name = "name", length = 100, nullable = false)

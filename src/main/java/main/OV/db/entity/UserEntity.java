@@ -1,15 +1,13 @@
 package main.OV.db.entity;
 
-import lombok.Data;
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "User")
-@Data
+
 public class UserEntity extends AbstractBaseEntity {
     public UserEntity(Long userId, String username, String password, String email, Role role, ClientEntity client, EmployeeEntity employee) {
         this.userId = userId;
@@ -17,8 +15,8 @@ public class UserEntity extends AbstractBaseEntity {
         this.password = password;
         this.email = email;
         this.role = role;
-        this.client = client;
-        this.employee = employee;
+//        this.client = client;
+//        this.employee = employee;
     }
 
     /** id  */
@@ -45,14 +43,14 @@ public class UserEntity extends AbstractBaseEntity {
     private Role role;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private EmployeeEntity employee; // Relación con un empleado (si aplica)
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "employee_id")
+//    private EmployeeEntity employee; // Relación con un empleado (si aplica)
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private ClientEntity client; // Relación con un cliente (si aplica)
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "client_id")
+//    private ClientEntity client; // Relación con un cliente (si aplica)
 
     public UserEntity() {
     }

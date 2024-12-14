@@ -9,25 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class CenterService implements ICenterService, Constants {
-    @Autowired
+  //  @Autowired
     private ICenterRepository centerRepository;
 
     @Override
     public CenterEntity getCenterInfoById(Long id) throws Exception {
 
-        CenterEntity center = centerRepository.getHistoryByBuilding(id);
-        if (center == null) {
-            throw new Exception("Center not found with id: " + id);
-        }
-        return  center;
+//        CenterEntity center = centerRepository.getHistoryByBuilding(id);
+//        if (center == null) {
+//            throw new Exception("Center not found with id: " + id);
+//        }
+        return  null;
     }
 
     @Override
     public List<ClientDto> getClientsByCenterId(Long centerId) throws Exception {
-        List<ClientDto> clients = centerRepository.findClientsByCenterId(centerId);
-        if (clients == null || clients.isEmpty()) {
-            throw new Exception("No clients found for center with id: " + centerId);
-        }
-        return clients;
+//        List<ClientDto> clients = centerRepository.findClientsByCenterId(centerId);
+//        if (clients == null || clients.isEmpty()) {
+//            throw new Exception("No clients found for center with id: " + centerId);
+//        }
+        return null;
     }
 }

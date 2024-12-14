@@ -1,20 +1,18 @@
 package main.OV.db.entity;
 
-import lombok.Data;
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Room")
-@Data
+
 public class RoomEntity extends AbstractBaseEntity {
     public RoomEntity(Long roomId, CenterEntity center, String type, Integer capacity, String name) {
         this.roomId = roomId;
-        this.center = center;
+//        this.center = center;
         this.type = type;
         this.capacity = capacity;
         this.name = name;
@@ -43,7 +41,7 @@ public class RoomEntity extends AbstractBaseEntity {
 
 
     /** Centro de la sala. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_id")
-    private CenterEntity center; // Relación con el centro al que pertenece la habitación
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "center_id")
+//    private CenterEntity center; // Relación con el centro al que pertenece la habitación
 }

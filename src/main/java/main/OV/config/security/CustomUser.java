@@ -1,6 +1,5 @@
 package main.OV.config.security;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -9,7 +8,7 @@ import java.util.List;
 /* (non-Javadoc)
  * @see org.springframework.security.core.userdetails.User#toString()
  */
-@Data
+
 public class CustomUser extends org.springframework.security.core.userdetails.User{
 
 	/** The Constant serialVersionUID. */
