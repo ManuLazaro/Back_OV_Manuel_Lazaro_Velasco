@@ -1,4 +1,4 @@
-package main.OV.service.impl;
+package main.OV.service;
 
 import main.OV.db.entity.CenterEntity;
 import main.OV.dto.ClientDto;

@@ -2,44 +2,117 @@ package main.OV.db.entity;
 
 import jakarta.persistence.*;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Client")
 
-public class ClientEntity extends AbstractBaseEntity {
+public class ClientEntity {
 
-    /**  id  */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "client_id")
+        private Long clientId;
 
-    /** nombre  */
-    @Column(name = "name", length = 100, unique = true, nullable = false)
-    private String name;
-    /** nombre  */
-    @Column(name = "last_name", length = 100, unique = true, nullable = false)
-    private String lastName;
-    /**  email  */
-    @Column(name = "email", length = 100, unique = true, nullable = false)
-    private String email;
+//        @ManyToOne
+//        @JoinColumn(name = "center_id", referencedColumnName = "center_id", nullable = true)
+//        private CenterEntity center;
 
-    @Column(name = "center_id")
-    private String centerId;
+        @Column(name = "first_name", nullable = false, length = 100)
+        private String firstName;
 
-    /** subscription */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "subscription", length = 20, nullable = false)
-    private Role subscription;
+        @Column(name = "last_name", nullable = false, length = 100)
+        private String lastName;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "employee_id")
-//    private EmployeeEntity employee; // Relación con un empleado (si aplica)
+        @Column(name = "email", nullable = true, length = 100, unique = true)
+        private String email;
 
+        @Column(name = "phone", nullable = true, length = 15)
+        private String phone;
+        @Column(name = "subscription", length = 15)
+        private String subscription;
+        @Column(name = "status", length = 20, nullable = true)
+        private String status = "active";
 
+        @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+        private LocalDateTime createdAt;
 
-    public enum Role {
-        ADMIN, EMPLOYEE, CLIENT;
-    }
+        @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+        private LocalDateTime updatedAt;
+
+        // Constructor vacío
+        public ClientEntity() {
+        }
+
+        public String getSubscription() {
+                return subscription;
+        }
+
+        public void setSubscription(String subscription) {
+                this.subscription = subscription;
+        }
+
+        public Long getClientId() {
+                return clientId;
+        }
+
+        public void setClientId(Long clientId) {
+                this.clientId = clientId;
+        }
+
+        public String getFirstName() {
+                return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+                this.firstName = firstName;
+        }
+
+        public String getLastName() {
+                return lastName;
+        }
+
+        public void setLastName(String lastName) {
+                this.lastName = lastName;
+        }
+
+        public String getEmail() {
+                return email;
+        }
+
+        public void setEmail(String email) {
+                this.email = email;
+        }
+
+        public String getPhone() {
+                return phone;
+        }
+
+        public void setPhone(String phone) {
+                this.phone = phone;
+        }
+
+        public String getStatus() {
+                return status;
+        }
+
+        public void setStatus(String status) {
+                this.status = status;
+        }
+
+        public LocalDateTime getCreatedAt() {
+                return createdAt;
+        }
+
+        public void setCreatedAt(LocalDateTime createdAt) {
+                this.createdAt = createdAt;
+        }
+
+        public LocalDateTime getUpdatedAt() {
+                return updatedAt;
+        }
+
+        public void setUpdatedAt(LocalDateTime updatedAt) {
+                this.updatedAt = updatedAt;
+        }
 }

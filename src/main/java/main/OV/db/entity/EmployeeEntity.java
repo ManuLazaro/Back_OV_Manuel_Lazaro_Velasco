@@ -1,9 +1,6 @@
 package main.OV.db.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.*;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,10 +9,6 @@ import java.time.LocalDateTime;
 @Table(name = "Employee")
 
 public class EmployeeEntity extends AbstractBaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id")
-    private Long employeeId;
 
     @Column(name = "center_id")
     private Integer centerId;
@@ -50,11 +43,18 @@ public class EmployeeEntity extends AbstractBaseEntity {
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
+    @Column(name = "turno")
+    private String turno;
+
+    @ManyToOne
+    @JoinColumn(name = "class_id", referencedColumnName = "class_id", nullable = true)
+    private ClassEntity classEntity;
+
+
     public EmployeeEntity() {
     }
 
-    public EmployeeEntity(Long employeeId, Integer centerId, String firstName, String lastName, String email, String phone, String role, LocalDate hireDate, String status, LocalDateTime createdAt, LocalDateTime updatedAt, String password) {
-        this.employeeId = employeeId;
+    public EmployeeEntity(Integer centerId, String firstName, String lastName, String email, String phone, String role, LocalDate hireDate, String status, LocalDateTime createdAt, LocalDateTime updatedAt, String password, String turno, ClassEntity classEntity) {
         this.centerId = centerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -66,14 +66,30 @@ public class EmployeeEntity extends AbstractBaseEntity {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.password = password;
+        this.turno = turno;
+        this.classEntity = classEntity;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public EmployeeEntity(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+    public ClassEntity getClassEntity() {
+        return classEntity;
+    }
+
+    public void setClassEntity(ClassEntity classEntity) {
+        this.classEntity = classEntity;
     }
 
     public Integer getCenterId() {

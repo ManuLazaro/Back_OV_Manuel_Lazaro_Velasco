@@ -3,13 +3,12 @@ package main.OV.db.entity;
 
 import jakarta.persistence.*;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "Payments")
 
-public class PaymentEntity extends AbstractBaseEntity {
+public class PaymentEntity {
 
     /** ID de pago */
     @Id
@@ -18,9 +17,9 @@ public class PaymentEntity extends AbstractBaseEntity {
     private Long paymentId;
 
     /** Cliente que hace el pago */
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "client_id")
-//    private ClientEntity client;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private ClientEntity client;
 
     /** Cantidad del pago */
     @Column(name = "amount", nullable = false)
@@ -38,4 +37,55 @@ public class PaymentEntity extends AbstractBaseEntity {
     @Column(name = "status", length = 20, nullable = false)
     private String status;
 
+    public PaymentEntity() {
+
+    }
+
+    public ClientEntity getClient() {
+        return client;
+    }
+
+    public void setClient(ClientEntity client) {
+        this.client = client;
+    }
+
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDate paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

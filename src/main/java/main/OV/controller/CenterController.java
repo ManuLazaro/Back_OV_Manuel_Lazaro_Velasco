@@ -2,15 +2,13 @@ package main.OV.controller;
 
 import main.OV.db.entity.CenterEntity;
 import main.OV.dto.ClientDto;
-import main.OV.service.impl.ICenterService;
+import main.OV.service.ICenterService;
 import main.OV.dto.CenterDto;
 import main.OV.util.Constants;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +30,7 @@ public class CenterController implements Constants {
         return null;
     }
 
-   // @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_DISTRIBUTOR', 'ROLE_PROPERTY_USER', 'ROLE_COUNCIL_USER', 'ROLE_OWNER', 'ROLE_MAINTAINER')")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_DISTRIBUTOR', 'ROLE_PROPERTY_USER', 'ROLE_COUNCIL_USER', 'ROLE_OWNER', 'ROLE_MAINTAINER')")
     @RequestMapping(value = "/centers/centersInfo", method = RequestMethod.GET)
     public ResponseEntity<CenterEntity> getCentersInfoById(@RequestParam(name = "id", required = true) Long id) {
 

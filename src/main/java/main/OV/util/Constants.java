@@ -9,4 +9,6 @@ public interface Constants {
    String USER_STATUS_INACTIVE = "Inactivo";
    String USER_STATUS_ACTIVE = "Activo";
 
+   String ROL_MONITOR = "monitor";
+
 }
