@@ -90,8 +90,7 @@ public class EmployeeService implements IEmployeeService {
      */
     @Override
     public EmployeeEntity findByEmail(String email) {
-        return employeeRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Empleado no encontrado con el email: " + email));
+        return employeeRepository.findByEmail(email).orElse(null); // Devolver null si no existe
     }
 
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface IPaymentService {
-    PaymentEntity doPayment(PaymentEntity payment);
+    PaymentEntity savePayment(PaymentEntity payment);
 
     List<PaymentDto> getAllPayments();
 

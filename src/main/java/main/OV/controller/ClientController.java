@@ -1,18 +1,19 @@
 package main.OV.controller;
 
+import jakarta.validation.ConstraintViolationException;
+import main.OV.db.entity.ClientEntity;
 import main.OV.dto.ClientDto;
 import main.OV.dto.ClientEntryDto;
 import main.OV.service.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/client")
@@ -20,6 +21,23 @@ public class ClientController {
 
     @Autowired
     private IClientService clientService;
+
+    @PostMapping("/saveClient")
+    public ResponseEntity<?> saveClient(@RequestBody ClientEntity client) {
+        try {
+            ClientEntity newClient = clientService.saveClient(client);
+            return new ResponseEntity<>(newClient, HttpStatus.CREATED);
+        } catch (ConstraintViolationException e) {
+            String errors = e.getConstraintViolations()
+                    .stream()
+                    .map(s -> s.getMessage())
+                    .collect(Collectors.joining(", "));
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/getAllClients")
     public ResponseEntity<List<ClientDto>> getAllClients() {
         try {
@@ -68,5 +86,26 @@ public class ClientController {
         }
     }
 
+    @PostMapping("/saveClientEntry")
+    public ResponseEntity<?> saveClientEntry(@RequestBody Map<String, String> request) {
+        try {
+            // Obtenemos el email del cuerpo de la solicitud
+            String email = request.get("email");
+
+            // Luego proceder con el resto de la lógica como antes
+            ClientEntryDto newClientEntry = clientService.saveClientEntry(email);
+            return new ResponseEntity<>(newClientEntry, HttpStatus.CREATED);
+
+        } catch (ConstraintViolationException e) {
+            String errors = e.getConstraintViolations()
+                    .stream()
+                    .map(s -> s.getMessage())
+                    .collect(Collectors.joining(", "));
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

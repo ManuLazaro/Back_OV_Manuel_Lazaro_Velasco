@@ -50,7 +50,9 @@ public class EmployeeEntity extends AbstractBaseEntity {
     @JoinColumn(name = "class_id", referencedColumnName = "class_id", nullable = true)
     private ClassEntity classEntity;
 
-
+    @ManyToOne
+    @JoinColumn(name = "user_type_id", referencedColumnName = "id", nullable = false)
+    private UserTypeEntity userType;
     public EmployeeEntity() {
     }
 

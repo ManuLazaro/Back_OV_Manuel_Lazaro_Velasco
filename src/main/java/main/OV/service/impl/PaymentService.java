@@ -25,9 +25,8 @@ public class PaymentService implements IPaymentService, Constants {
      * @param payment
      * @return
      */
-    @Override
-    public PaymentEntity doPayment(PaymentEntity payment) {
-        return null;
+    public PaymentEntity savePayment(PaymentEntity payment) {
+        return paymentRepository.save(payment);
     }
 
     /**

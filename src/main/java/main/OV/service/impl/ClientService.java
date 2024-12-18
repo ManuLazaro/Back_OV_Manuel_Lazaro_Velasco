@@ -2,6 +2,7 @@ package main.OV.service.impl;
 
 import main.OV.db.entity.ClientEntity;
 import main.OV.db.entity.ClientEntryEntity;
+import main.OV.db.entity.UserTypeEntity;
 import main.OV.db.repository.ClientEntryRepository;
 import main.OV.db.repository.ClientRepository;
 import main.OV.dto.ClientDto;
@@ -9,9 +10,11 @@ import main.OV.dto.ClientEntryDto;
 import main.OV.service.IClientService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -113,6 +116,83 @@ public class ClientService implements IClientService {
     }
 
 
+    /**
+     * @param client
+     * @return
+     */
+    @Override
+    public ClientEntity saveClient(ClientEntity client) {
+        // Establecer la fecha de creación y actualización
+        client.setCreatedAt(LocalDateTime.now());
+        client.setUpdatedAt(LocalDateTime.now());
 
+        // Crear un UserTypeEntity manualmente con id 1
+        UserTypeEntity userType = new UserTypeEntity(1, "cliente");
+
+        // Establecer el tipo de usuario en el cliente
+        client.setUserType(userType);
+
+        // Guardar el cliente
+        return clientRepository.save(client);
+    }
+
+
+    /**
+     * @param email
+     * @return
+     */
+    @Override
+    public ClientEntity findByEmail(String email) {
+        return clientRepository.findByEmail(email).orElse(null); // Devolver null si no existe
+    }
+
+    /**
+     * @param email
+     * @return
+     */
+    @Override
+    public ClientEntryDto saveClientEntry(String email) {
+        // Buscar cliente por email
+        ClientEntity client = clientRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+        // Crear el ClientDto con los datos del ClientEntity
+        ClientDto clientDto = new ClientDto(
+                client.getFirstName(),
+                client.getLastName(),
+                client.getSubscription(),
+                client.getStatus(),
+                client.getCreatedAt() // o cualquier otro campo que desees pasar
+        );
+
+        // Obtener la fecha de hoy
+        LocalDate today = LocalDate.now();
+
+        // Verificar si ya existe una entrada para el cliente en el día de hoy
+        Optional<ClientEntryEntity> existingEntry = clientEntryRepository.findByClientAndEntryTimeIsAfter(
+                client, today.atStartOfDay());
+
+        if (existingEntry.isPresent()) {
+            // Si ya existe una entrada, actualizamos la exitTime con la fecha y hora actual
+            ClientEntryEntity entry = existingEntry.get();
+            entry.setExitTime(LocalDateTime.now());
+            clientEntryRepository.save(entry);
+
+            // Devolvemos la entidad actualizada como DTO, pero solo el clientId y count
+            int count = clientEntryRepository.countByClientAndEntryTimeIsAfter(client, today.atStartOfDay());
+            return new ClientEntryDto(entry.getEntryId(), clientDto, entry.getEntryTime(), entry.getExitTime(), count);
+        } else {
+            // Si no existe una entrada, creamos una nueva
+            ClientEntryEntity newEntry = new ClientEntryEntity();
+            newEntry.setClient(client);
+            newEntry.setEntryTime(LocalDateTime.now());
+            newEntry.setExitTime(null);  // El exitTime se mantiene en null al principio
+            clientEntryRepository.save(newEntry);
+
+            // Devolvemos la entidad recién creada como DTO, pero solo el clientId y count
+            int count = clientEntryRepository.countByClientAndEntryTimeIsAfter(client, today.atStartOfDay());
+            return new ClientEntryDto(newEntry.getEntryId(), clientDto, newEntry.getEntryTime(), newEntry.getExitTime(), count);
+        }
+    }
 
 }

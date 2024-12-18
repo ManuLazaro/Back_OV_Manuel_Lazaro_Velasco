@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class ClientEntryDto {
     private Long entryId; // ID único para cada entrada/salida
 
-    private int count; // Número de registros en esa hora
+    private int count; // COntador para el Número de registros en esa hora
     private ClientDto client;
 
     private LocalDateTime entryTime;
@@ -24,6 +24,9 @@ public class ClientEntryDto {
         this.client = client;
         this.entryTime = entryTime;
         this.exitTime = exitTime;
+    }
+
+    public ClientEntryDto(Long entryId, ClientDto clientDto, LocalDateTime entryTime, LocalDateTime exitTime, int count) {
     }
 
     public int getCount() {

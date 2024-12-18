@@ -34,14 +34,62 @@ public class ClientEntity {
         @Column(name = "status", length = 20, nullable = true)
         private String status = "active";
 
+        @Column(name = "password")
+        private String password;
+
+        @Column(name = "birth_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+        private LocalDateTime birth;
         @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         private LocalDateTime createdAt;
 
         @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         private LocalDateTime updatedAt;
 
+        @ManyToOne
+        @JoinColumn(name = "user_type_id", referencedColumnName = "id", nullable = false)
+        private UserTypeEntity userType;
+
+
         // Constructor vacío
         public ClientEntity() {
+        }
+
+        public ClientEntity(Long clientId, String firstName, String lastName, String email, String phone, String subscription, String status, String password, LocalDateTime birth, LocalDateTime createdAt, LocalDateTime updatedAt) {
+                this.clientId = clientId;
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.email = email;
+                this.phone = phone;
+                this.subscription = subscription;
+                this.status = status;
+                this.password = password;
+                this.birth = birth;
+                this.createdAt = createdAt;
+                this.updatedAt = updatedAt;
+        }
+
+        public UserTypeEntity getUserType() {
+                return userType;
+        }
+
+        public void setUserType(UserTypeEntity userType) {
+                this.userType = userType;
+        }
+
+        public LocalDateTime getBirth() {
+                return birth;
+        }
+
+        public void setBirth(LocalDateTime birth) {
+                this.birth = birth;
+        }
+
+        public String getPassword() {
+                return password;
+        }
+
+        public void setPassword(String password) {
+                this.password = password;
         }
 
         public String getSubscription() {

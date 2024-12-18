@@ -1,36 +1,52 @@
 package main.OV.controller;
 
-import jakarta.validation.ConstraintViolationException;
+import main.OV.db.entity.ClientEntity;
 import main.OV.db.entity.PaymentEntity;
 import main.OV.dto.PaymentDto;
+import main.OV.service.IClientService;
 import main.OV.service.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
 
     @Autowired
     private IPaymentService paymentService;
+    @Autowired
+    private IClientService clientService;
 
-    @PostMapping("/doPayment")
-    public ResponseEntity<?> doPayment(@RequestBody PaymentEntity payment) {
+    @PostMapping("/savePayment")
+    public ResponseEntity<?> savePayment(@RequestBody PaymentDto paymentDto) {
         try {
+            // Obtener el cliente por el correo electrónico
+            ClientEntity client = clientService.findByEmail(paymentDto.getEmail());
+            if (client == null) {
+                return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
+            }
 
-            PaymentEntity newPayment = paymentService.doPayment(payment);
+            // Crear un nuevo PaymentEntity
+            PaymentEntity newPayment = new PaymentEntity();
+            newPayment.setAmount(paymentDto.getAmount());
+            newPayment.setMethod(paymentDto.getMethod());
+            newPayment.setPaymentDate(LocalDate.now());
+            newPayment.setStatus("completed");
+            newPayment.setClient(client);
 
-            return new ResponseEntity<>(newPayment, HttpStatus.CREATED);
+            // Guardar el pago en la base de datos
+            PaymentEntity savedPayment = paymentService.savePayment(newPayment);
 
-        } catch (ConstraintViolationException e) {
-            String errors = e.getConstraintViolations().stream().map(s -> s.getMessage()).collect(Collectors.joining(", "));
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(savedPayment, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al guardar el pago: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/getAllPayments")
     public ResponseEntity<List<PaymentDto>> getAllPayments() {
         try {

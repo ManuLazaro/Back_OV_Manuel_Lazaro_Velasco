@@ -9,6 +9,7 @@ public class PaymentDto {
     private Double amount;
     private String method;
     private String status;
+     private String email;
 
     public PaymentDto(ClientDto clientDto, LocalDate paymentDate, Double amount, String method, String status) {
         this.clientDto = clientDto;
@@ -21,6 +22,13 @@ public class PaymentDto {
     public PaymentDto() {
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public ClientDto getClientDto() {
         return clientDto;
